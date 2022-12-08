@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/assets/css/custom.css">
+    <title>Book Catalog</title>
+</head>
+<body>
+    <div class="container text-center align-middle">
+        <h2>Book Catalog</h2>
+        <br>
+        <form action="" method="post">
+            <input type="isbn_number" placeholder="ISBN Number" name="isbn_number" value="{{
+                request.form.isbn_number }}">
+            <a href="/home"><input class="btn btn-primary" type="submit" value="Add"></a>
+        </form>
+        {% if error %}
+            <p><strong>{{ error }}</strong></p>
+        {% endif %}
+        <br>
+        <h4>The list of books:</h4>
+        <br>
+        <ul>
+            {%for line in data%}
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-1">
+                        <form action="/delete" method=post class=delete-book>
+                            <input type=hidden value="{{line[0]}}"name=book_to_delete />
+                            <input type=submit value="Delete" />
+                        </form>
+                    </div>
+                    <div class="col-sm-4">
+                        <ul>
+                            <li class="float-end" style="list-style-image: url({{line[5]}});"></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm">
+                        <ul>
+                            <li class="text-start"><b>ISBN Number&nbsp;&nbsp;&nbsp;&nbsp;:</b> {{line[0]}}</li>
+                            <li class="text-start"><b>Title&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b> {{line[1]}}</li>
+                            <li class="text-start"><b>Authors&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b> {{line[2]}}</li>
+                            <li class="text-start"><b>Page Count&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b> {{line[3]}}</li>
+                            <li class="text-start"><b>Average Rating&nbsp;:</b> {{line[4]}}</li>
+                        </ul>
+                    </div>
+                <br>
+                </div>
+            </div>    
+            {%endfor%}
+        </ul>
+    </div>
+</body>
+</html>
